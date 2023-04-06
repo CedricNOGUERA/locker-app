@@ -34,19 +34,19 @@ export default function GlobalFooter({ navigation, AppStates }) {
                 paddingHorizontal: 5,
               }}
             >
-              <Text style={{ color: "#fff" }}>{progress?.length}</Text>
+              <Text style={styles.badge}>{progress?.length}</Text>
             </View>
           )}
         </Text>
-        <Text style={{ color: "white" }}>En cours</Text>
+        <Text style={styles.textItems}>En cours</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation?.navigate("CreateNote")}
+        onPress={() => navigation?.navigate("Delivered")}
         style={styles.itemFooter}
       >
         <Text>
           <IconEntypo name="download" size={24} color="#00caed"></IconEntypo>
-          {progress?.length > 0 && (
+          {delivered?.length > 0 && (
             <View
               style={{
                 backgroundColor: "#f00",
@@ -54,34 +54,40 @@ export default function GlobalFooter({ navigation, AppStates }) {
                 paddingHorizontal: 5,
               }}
             >
-              <Text style={{ color: "#fff" }}>{delivered?.length}</Text>
+              <Text style={styles.badge}>{delivered?.length}</Text>
+            </View>
+          )}
+        </Text>
+        <Text style={styles.textItems}>Déposées</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation?.navigate("ToRetrieve")}
+        style={styles.itemFooter}
+      >
+        <Text>
+          <IconEntypo name="upload" size={24} color="#00caed"></IconEntypo>
+          {retrieve?.length > 0 && (
+            <View
+              style={{
+                backgroundColor: "#f00",
+                borderRadius: 50,
+                paddingHorizontal: 5,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: "300",
+                  color: "#fff",
+                }}
+              >
+                {retrieve?.length}
+              </Text>
             </View>
           )}
         </Text>
 
-        <Text style={{ color: "white" }}>A déposer</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation?.navigate("Note")}
-        style={styles.itemFooter}
-      >
-      <Text>
-
-        <IconEntypo name="upload" size={24} color="#00caed"></IconEntypo>
-        {progress?.length > 0 && (
-            <View
-              style={{
-                backgroundColor: "#f00",
-                borderRadius: 50,
-                paddingHorizontal: 5,
-              }}
-            >
-              <Text style={{ color: "#fff" }}>{retrieve?.length}</Text>
-            </View>
-          )}
-      </Text>
-
-        <Text style={{ color: "white" }}>A récupérer</Text>
+        <Text style={{ color: "white", fontSize: 12, }}>A récupérer</Text>
       </TouchableOpacity>
     </View>
   );
@@ -103,4 +109,13 @@ const styles = StyleSheet.create({
   itemFooter: {
     alignItems: "center",
   },
+  badge: {
+    fontSize: 10,
+    fontWeight: '300',
+    color: "#fff",
+  },
+  textItems: {
+    color: "white", 
+    fontSize: 12
+  }
 });

@@ -5,7 +5,7 @@ import IconFont from "react-native-vector-icons/FontAwesome5";
 
 const Searchbar = ({searchbarData}) => {
 
-  const {handleShowPosModal, searchOrder, selectedStore, handleSearch } = searchbarData
+  const {handleShowPodModal, searchOrder, selectedStore, handleSearch } = searchbarData
 
   return (
     <View style={styles.searchCont}>
@@ -21,7 +21,7 @@ const Searchbar = ({searchbarData}) => {
       <View style={{ flex: 0.1 }}></View>
       
       <TouchableOpacity style={styles.storeSelecter} onPress={() => {
-              handleShowPosModal();
+              handleShowPodModal();
             }}>
         <View>
           <Text>

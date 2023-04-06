@@ -4,6 +4,41 @@ import AppNavigation from "../AppNavigation/AppNavigation";
 
 export default function AppState() {
 
+  const bookingSlot = [
+    {
+      id: "654",
+      lockerId: "987", //fKey
+      companyId: "321", //fKey
+      temperatureZone: [
+        {
+          id:"321",
+          name: "sec",
+          countIn: 2,
+          bookingCount: 10,
+        },
+        {
+          id:"221",
+          name: "frais",
+          countIn: 4,
+          bookingCount: 15,
+        },
+        {
+          id:"121",
+          name: "surgele",
+          countIn: 1,
+          bookingCount: 5,
+        }
+      ]
+
+    }
+  ]
+
+  const company =[
+    {
+      
+    }
+  ]
+
     const commandes = [
         {
         "id": "980-498-409",
@@ -659,9 +694,12 @@ export default function AppState() {
     ];
     const [orderData, setOrderData] = useState([]);
     const [deliveryPoint, setDeliveryPoint] = useState([]);
+    const [filteredUserData, setFilteredUserData] = useState([]);
 
  
     const [selectedStore, setSelectedStore] = useState("Punaauia");
+    const [isLogged, setIsLogged] = useState(false);
+
 
     const AppStates = {
         commandes,
@@ -669,7 +707,11 @@ export default function AppState() {
         setSelectedStore,
         deliveryPoint,
         orderData, 
-        setOrderData
+        setOrderData,
+        isLogged, 
+        setIsLogged,
+        filteredUserData, 
+        setFilteredUserData,
     }
 
     useEffect(() => {

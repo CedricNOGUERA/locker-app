@@ -22,9 +22,7 @@ export default function Home({ navigation, AppStates }) {
     orderData,
     setOrderData,
     isLogged,
-    setIsLogged,
-    filteredUserData,
-   setFilteredUserData
+    setIsLogged
   } = AppStates;
   
   /********************************
@@ -56,7 +54,7 @@ export default function Home({ navigation, AppStates }) {
   *******************************/
 
  const orderfilterByStore = orderData?.filter(
-    (cde) => cde.location === selectedStore && cde.status === "inProgress"
+    (cde) => cde.location === selectedStore && cde.status === "delivered"
   );
   
   /********************************
@@ -93,7 +91,7 @@ export default function Home({ navigation, AppStates }) {
       firstNameCustom: filteredOrder[0].firstNameCustom,
       LastNameCustom: filteredOrder[0].LastNameCustom,
       detailOrder: filteredOrder[0].detailOrder,
-      status: "delivered",
+      status: "toRetrieve",
     };
     newTab[indx] = newStatus;
     setOrderData(newTab);
@@ -127,12 +125,11 @@ export default function Home({ navigation, AppStates }) {
     searchOrder,
   };
   const scanPageData = { updateStatus, setSelectedOrder, selectedOrder };
-  const headerData = { navigation, isLogged, setIsLogged,filteredUserData, setFilteredUserData };
-  
- 
+  const headerData = { navigation, isLogged, setIsLogged };
+
   return (
     <View style={styles.screen}>
-      <GlobalHeader headerData={headerData} tilteHeader={"Commande en cours"} />
+      <GlobalHeader headerData={headerData} tilteHeader={"Déposées"} />
       <StatusBar style="light" animation={true} backgroundColor={"#a9a9a9"} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
