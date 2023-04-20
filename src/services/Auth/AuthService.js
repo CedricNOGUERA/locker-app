@@ -1,6 +1,5 @@
 import axios from "axios";
 // import { getError } from "../../utils/errors/GetError";
-// import { getError } from "../../utils/errors/AxiosError";
 
 const API_URL = "http://192.168.1.250:8000/api/";
 
@@ -38,6 +37,7 @@ class AuthService {
             // setMsg(getError(error))
             // setCodeError(error.response.data.code)
             setIsError(true)
+            setIsLoadingAuth(false)
             // setIsLoadingAuth(false)
 
           });

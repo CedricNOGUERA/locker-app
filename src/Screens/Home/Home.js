@@ -1,6 +1,7 @@
 import {
   View,
   StyleSheet,
+  // DrawerLayoutAndroid,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import GlobalFooter from "../../Footer/GlobalFooter";
@@ -10,6 +11,7 @@ import PodModal from "../Components/Modals/PodModal";
 import OrderList from "../Components/OrderList/OrderList";
 import ScanPage from "../Components/ScanPage/ScanPage";
 import { _searchWithRegex } from "../../utils/functions";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home({ navigation, AppStates }) {
   /********************************
@@ -127,16 +129,20 @@ export default function Home({ navigation, AppStates }) {
     searchOrder,
   };
   const scanPageData = { updateStatus, setSelectedOrder, selectedOrder };
-  const headerData = { navigation, isLogged, setIsLogged,filteredUserData, setFilteredUserData };
+  const headerData = { navigation, isLogged, setIsLogged,filteredUserData, setFilteredUserData, updateStatus, setSelectedOrder, selectedOrder };
   
  
   return (
     <View style={styles.screen}>
       <GlobalHeader headerData={headerData} tilteHeader={"Commande en cours"} />
-      <StatusBar style="light" animation={true} backgroundColor={"#a9a9a9"} />
+      <StatusBar style="light" animation={true} backgroundColor={"#a1a1a1"} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
+          <>
+
           <OrderList orderListData={orderListData} />
+          {/* <DrawerLayoutAndroid drawerBackgroundColor="rgba(0,0,0,0.5)" /> */}
+          </>
         ) : (
           <ScanPage scanPageData={scanPageData} />
         )}

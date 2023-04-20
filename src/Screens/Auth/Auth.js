@@ -180,22 +180,12 @@ const Auth = ({ navigation, AppStates }) => {
                   </Text>
                 )}
                 <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    height: 40,
-                    marginTop: 20,
-                    marginBottom: 20,
-                    backgroundColor: '#00caed',
-                    // backgroundColor: "#505050",
-                    padding: 10,
-                    borderRadius: 20,
-                    justifyContent:'center'
-                  }}
+                  style={styles.button}
                   onPress={authentification}
                 >
                 {isLoadingAuth &&
-                <ActivityIndicator />
-                }
+                <ActivityIndicator color="#fff" />
+                } 
                   <Text style={{  color: '#fff', fontSize: 18 }}>Valider</Text>
                 </TouchableOpacity>
               </View>
@@ -228,6 +218,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
   },
+  button: {
+    flexDirection: 'row',
+    height: 40,
+    marginTop: 20,
+    marginBottom: 20,
+    backgroundColor: '#00caed',
+    padding: 10,
+    borderRadius: 20,
+    justifyContent:'center'
+  }
 })
 
 export default Auth
