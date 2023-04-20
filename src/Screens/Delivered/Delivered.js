@@ -22,7 +22,8 @@ export default function Home({ navigation, AppStates }) {
     orderData,
     setOrderData,
     isLogged,
-    setIsLogged
+    setIsLogged,
+    filteredUserData,
   } = AppStates;
   
   /********************************
@@ -125,7 +126,7 @@ export default function Home({ navigation, AppStates }) {
     searchOrder,
   };
   const scanPageData = { updateStatus, setSelectedOrder, selectedOrder };
-  const headerData = { navigation, isLogged, setIsLogged };
+  const headerData = { navigation, isLogged, setIsLogged, filteredUserData };
 
   return (
     <View style={styles.screen}>

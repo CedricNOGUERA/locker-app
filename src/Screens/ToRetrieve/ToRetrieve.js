@@ -22,7 +22,9 @@ import {
       orderData,
       setOrderData,
       isLogged,
-      setIsLogged
+      setIsLogged,
+      filteredUserData,
+      setFilteredUserData
     } = AppStates;
     
     /********************************
@@ -125,7 +127,7 @@ import {
       searchOrder,
     };
     const scanPageData = { updateStatus, setSelectedOrder, selectedOrder };
-    const headerData = { navigation, isLogged, setIsLogged };
+    const headerData = { navigation, isLogged, setIsLogged,  filteredUserData };
   
     return (
       <View style={styles.screen}>

@@ -44,7 +44,7 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
             style={{ resizeMode: "contain", width: 32, height: 32 }}
           />
         </View>
-        <Text style={{ paddingHorizontal: 25, color: "white" }}>{filteredUserData[0].first_name}</Text>
+        <Text style={{ paddingHorizontal: 25, color: "white" }}>{filteredUserData.firstName}</Text>
       </TouchableOpacity>
       <Modal
         style={{

@@ -16,44 +16,53 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconAntd from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { AsyncStorage } from 'react-native'
+import AuthService from '../../services/Auth/AuthService'
+import UserService from '../../services/UserService'
 
 const Auth = ({ navigation, AppStates }) => {
-  const { setFilteredUserData, filteredUserData } = AppStates
+  const { setFilteredUserData, filteredUserData, setIsLogged } = AppStates
 
-  const { isLogged, setIsLogged } = AppStates
+  
   const [usersData, setUsersData] = useState([])
-  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
   const [pass, setPass] = useState('')
+  const [token, setToken] = useState('')
   const [isError, setIsError] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    getAllUsers()
-  }, [])
+    if (token && token?.length > 0) {
+      navigation.navigate('Home')
+      getMyData(token)
+      setIsLogged(true)
 
-  const getAllUsers = () => {
-    var myHeaders = new Headers()
-    myHeaders.append(
-      'apikey',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjaHJ2cW12Y2lhZ3RybWZscG9lIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk2NjM4OTcsImV4cCI6MTk4NTIzOTg5N30.P0I1e92t1SE51o-8sqS2iCPpP1TkJljtDnP-1aA3dKQ'
-    )
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
     }
+    // getAllUsers()
+  }, [token])
 
-    fetch('https://fchrvqmvciagtrmflpoe.supabase.co/rest/v1/users?select=*', requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setUsersData(result)
-      })
-      .catch((error) => console.log('error', error))
-  }
+  // const getAllUsers = () => {
+  //   var myHeaders = new Headers()
+  //   myHeaders.append(
+  //     'apikey',
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjaHJ2cW12Y2lhZ3RybWZscG9lIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk2NjM4OTcsImV4cCI6MTk4NTIzOTg5N30.P0I1e92t1SE51o-8sqS2iCPpP1TkJljtDnP-1aA3dKQ'
+  //   )
+
+  //   var requestOptions = {
+  //     method: 'GET',
+  //     headers: myHeaders,
+  //     redirect: 'follow',
+  //   }
+
+  //   fetch('https://fchrvqmvciagtrmflpoe.supabase.co/rest/v1/users?select=*', requestOptions)
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setUsersData(result)
+  //     })
+  //     .catch((error) => console.log('error', error))
+  // }
 
   const onChangeEmail = (text) => {
-    setEmail(text)
+    setUserName(text)
   }
   const onChangePass = (text) => {
     setPass(text)
@@ -67,11 +76,30 @@ const Auth = ({ navigation, AppStates }) => {
       console.log(error)
     }
   }
+  const getMyData = () =>{
+    UserService.me(token).then((response) => {
+      setFilteredUserData(response.data)
+    })
+
+  }
 
   const authentification = () => {
+
+    AuthService.login(
+      userName,
+      pass,
+      setToken,
+      setIsError,
+      // setMsgError,
+      // setIsLoadingAuth,
+      // setCodeError
+    )
+
+
+
     if (Array.isArray(usersData)) {
       const filterUser = usersData?.filter(
-        (user) => user?.username === email && user?.pass === pass
+        (user) => user?.username === userName && user?.pass === pass
       )
 
       if (filterUser && filterUser.length > 0) {
@@ -79,7 +107,7 @@ const Auth = ({ navigation, AppStates }) => {
         setIsError(false)
         setFilteredUserData(filterUser)
         storeData(filterUser)
-        setEmail('')
+        setUserName('')
         setPass('')
         navigation.navigate('Home')
       } else {
@@ -90,6 +118,7 @@ const Auth = ({ navigation, AppStates }) => {
       alert('c la hesss : ' + usersData.id)
     }
   }
+  console.log(token)
 
   return (
     <KeyboardAvoidingView
@@ -119,7 +148,7 @@ const Auth = ({ navigation, AppStates }) => {
                   Locker
                 </Text>
               </View>
-              <View style={{ flex: 2, width: 300, marginTop: 25}}>
+              <View style={{ flex: 2, width: 320, marginTop: 25}}>
                 <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                   <View
                     style={{
@@ -133,7 +162,7 @@ const Auth = ({ navigation, AppStates }) => {
                   <TextInput
                     style={styles.input}
                     onChangeText={onChangeEmail}
-                    value={email}
+                    value={userName}
                     placeholder='Pseudo'
                     keyboardType='ascii-capable'
                   />
@@ -157,7 +186,7 @@ const Auth = ({ navigation, AppStates }) => {
                     secureTextEntry={isVisible}
                   />
                     <Ionicons name={isVisible ? 'eye-sharp' : 'eye-off-sharp'} size={28} color='#b6b6b6' style={{position: "absolute", 
-                    right: 0, top: 5
+                    right: 10, top: 5
                      }}
                      onPress={() => setIsVisible(!isVisible)}
                       />
@@ -180,7 +209,7 @@ const Auth = ({ navigation, AppStates }) => {
                   }}
                   onPress={authentification}
                 >
-                  <Text style={{ textAlign: 'center', color: '#fff' }}>Valider</Text>
+                  <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>Valider</Text>
                 </TouchableOpacity>
               </View>
             </View>
