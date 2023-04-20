@@ -7,7 +7,7 @@ const API_URL = "http://192.168.1.250:8000/api/";
 
 class AuthService {
     login(userName, pass, setToken, setIsError, 
-      // setIsLoadingAuth, 
+      setIsLoadingAuth, 
       // setMsg,  setCodeError
       ) {
       // setIsLoadingAuth(true)
@@ -30,7 +30,8 @@ class AuthService {
           .then((response) => {
             setToken(response.data.token)
             // localStorage.setItem("user", response.data.token);
-            // setIsLoadingAuth(false)
+            setIsLoadingAuth(false)
+            setIsError(false)
           })
           .catch((error) => {
             console.log(error);

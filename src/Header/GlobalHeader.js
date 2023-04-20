@@ -46,6 +46,7 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
         </View>
         <Text style={{ paddingHorizontal: 25, color: "white" }}>{filteredUserData.firstName}</Text>
       </TouchableOpacity>
+      
       <Modal
         style={{
           borderWidth: 1,

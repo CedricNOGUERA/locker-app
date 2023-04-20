@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native'
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconAntd from 'react-native-vector-icons/AntDesign'
@@ -28,38 +29,20 @@ const Auth = ({ navigation, AppStates }) => {
   const [pass, setPass] = useState('')
   const [token, setToken] = useState('')
   const [isError, setIsError] = useState(false)
+  const [isLoadingAuth, setIsLoadingAuth] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     if (token && token?.length > 0) {
-      navigation.navigate('Home')
+      setUserName('')
+      setPass('')
       getMyData(token)
       setIsLogged(true)
+      navigation.navigate('Home')
 
     }
-    // getAllUsers()
   }, [token])
 
-  // const getAllUsers = () => {
-  //   var myHeaders = new Headers()
-  //   myHeaders.append(
-  //     'apikey',
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjaHJ2cW12Y2lhZ3RybWZscG9lIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk2NjM4OTcsImV4cCI6MTk4NTIzOTg5N30.P0I1e92t1SE51o-8sqS2iCPpP1TkJljtDnP-1aA3dKQ'
-  //   )
-
-  //   var requestOptions = {
-  //     method: 'GET',
-  //     headers: myHeaders,
-  //     redirect: 'follow',
-  //   }
-
-  //   fetch('https://fchrvqmvciagtrmflpoe.supabase.co/rest/v1/users?select=*', requestOptions)
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setUsersData(result)
-  //     })
-  //     .catch((error) => console.log('error', error))
-  // }
 
   const onChangeEmail = (text) => {
     setUserName(text)
@@ -84,41 +67,40 @@ const Auth = ({ navigation, AppStates }) => {
   }
 
   const authentification = () => {
-
+    setIsLoadingAuth(true)
     AuthService.login(
       userName,
       pass,
       setToken,
       setIsError,
       // setMsgError,
-      // setIsLoadingAuth,
+      setIsLoadingAuth,
       // setCodeError
     )
 
 
 
-    if (Array.isArray(usersData)) {
-      const filterUser = usersData?.filter(
-        (user) => user?.username === userName && user?.pass === pass
-      )
+    // if (Array.isArray(usersData)) {
+    //   const filterUser = usersData?.filter(
+    //     (user) => user?.username === userName && user?.pass === pass
+    //   )
 
-      if (filterUser && filterUser.length > 0) {
-        setIsLogged(true)
-        setIsError(false)
-        setFilteredUserData(filterUser)
-        storeData(filterUser)
-        setUserName('')
-        setPass('')
-        navigation.navigate('Home')
-      } else {
-        setIsError(true)
-        setIsLogged(false)
-      }
-    } else {
-      alert('c la hesss : ' + usersData.id)
-    }
+    //   if (filterUser && filterUser.length > 0) {
+    //     setIsLogged(true)
+    //     setIsError(false)
+    //     setFilteredUserData(filterUser)
+    //     storeData(filterUser)
+    //     setUserName('')
+    //     setPass('')
+    //     navigation.navigate('Home')
+    //   } else {
+    //     setIsError(true)
+    //     setIsLogged(false)
+    //   }
+    // } else {
+    //   alert('c la hesss : ' + usersData.id)
+    // }
   }
-  console.log(token)
 
   return (
     <KeyboardAvoidingView
@@ -199,6 +181,7 @@ const Auth = ({ navigation, AppStates }) => {
                 )}
                 <TouchableOpacity
                   style={{
+                    flexDirection: 'row',
                     height: 40,
                     marginTop: 20,
                     marginBottom: 20,
@@ -206,10 +189,14 @@ const Auth = ({ navigation, AppStates }) => {
                     // backgroundColor: "#505050",
                     padding: 10,
                     borderRadius: 20,
+                    justifyContent:'center'
                   }}
                   onPress={authentification}
                 >
-                  <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>Valider</Text>
+                {isLoadingAuth &&
+                <ActivityIndicator />
+                }
+                  <Text style={{  color: '#fff', fontSize: 18 }}>Valider</Text>
                 </TouchableOpacity>
               </View>
             </View>
