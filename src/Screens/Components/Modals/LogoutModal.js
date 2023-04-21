@@ -12,7 +12,7 @@ const LogoutModal = ({modalLogoutVisible, setModalLogoutVisible, setIsLogged }) 
     transparent={true}
     visible={modalLogoutVisible}
     onRequestClose={() => {
-        setModalLogoutVisible(!modalLogoutVisible)
+        setModalLogoutVisible(false)
     }}
   >
     <View style={styles.centeredView}>
@@ -35,7 +35,7 @@ const LogoutModal = ({modalLogoutVisible, setModalLogoutVisible, setIsLogged }) 
             style={[styles.button, styles.buttonConfirm]}
             onPress={() => {
               setIsLogged(false)
-              setModalLogoutVisible(!modalLogoutVisible)
+            //   setModalLogoutVisible(false)
             }}
           >
             <Text style={styles.textStyle}>Confirmer</Text>

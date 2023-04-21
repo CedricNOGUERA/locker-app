@@ -118,7 +118,7 @@ const Auth = ({ navigation, AppStates }) => {
                   alignItems: 'center',
                 }}
               >
-                <IconMCI name='truck-fast-outline' size={120} color='#fff' />
+                <IconMCI name='truck-fast-outline' size={100} color='#fff' />
                 <Text
                   style={{
                     textAlign: 'center',
