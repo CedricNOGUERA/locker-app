@@ -12,6 +12,7 @@ import OrderList from "../Components/OrderList/OrderList";
 import ScanPage from "../Components/ScanPage/ScanPage";
 import { _searchWithRegex } from "../../utils/functions";
 import { SafeAreaView } from "react-native-safe-area-context";
+import OrdersService from "../../services/Orders/OrdersService";
 
 export default function Home({ navigation, AppStates }) {
   /********************************
@@ -26,7 +27,9 @@ export default function Home({ navigation, AppStates }) {
     isLogged,
     setIsLogged,
     filteredUserData,
-   setFilteredUserData
+   setFilteredUserData,
+   token, setToken,
+   test, setTest
   } = AppStates;
   
   /********************************
@@ -43,14 +46,21 @@ export default function Home({ navigation, AppStates }) {
   *******************************/
 
   useEffect(() => {
+   
+  getallOrders(token)
+  }, []);
+
+  useEffect(() => {
    if(isLogged === false){
     navigation.navigate("Auth")
   }
   }, [isLogged]);
+  
   useEffect(() => {
     _searchWithRegex(searchOrder, orderfilterByStore, setFilteredData);
   }, [searchOrder]);
 
+  console.log(test)
   
 
   /********************************
@@ -60,6 +70,24 @@ export default function Home({ navigation, AppStates }) {
  const orderfilterByStore = orderData?.filter(
     (cde) => cde.location === selectedStore && cde.status === "inProgress"
   );
+const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "created"
+//  && order.bookingSlot.slot.temperatureZone.locker.location === selectedStore
+ )
+
+
+  const getallOrders = (token) => {
+    OrdersService.allOrders(token).then((response) => {
+      // setIsLoading(false)
+      setTest(response.data)
+      console.log(response.data)
+    })
+  }
+
+
+  console.log(orderfilterByStoreTest)
+  console.log(orderfilterByStore)
+
+
   
   /********************************
    * Regex search bar -> use function '_searchWithRegex' in useEffect
@@ -124,6 +152,8 @@ export default function Home({ navigation, AppStates }) {
   const orderListData = {
     searchbarData,
     orderfilterByStore,
+    orderfilterByStoreTest,
+    
     filteredData,
     setSelectedOrder,
     searchOrder,

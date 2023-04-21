@@ -14,33 +14,40 @@ const OrderList = ({ orderListData }) => {
   const {
     searchbarData,
     orderfilterByStore,
+    orderfilterByStoreTest,
     filteredData,
     setSelectedOrder,
     searchOrder,
   } = orderListData;
 
+
+  const tempZone = orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""
+
+
+
+
   return (
     <ScrollView>
       <Searchbar searchbarData={searchbarData} />
 
-      {orderfilterByStore.length > 0 ? (
-        filteredData.length > 0 ? (
+      {orderfilterByStoreTest?.length > 0 ? (
+        filteredData?.length > 0 ? (
           filteredData?.map((cde, indx) => (
             <View key={indx} style={styles.orderCont}>
               <View style={{ flexDirection: "row" }}>
-                {cde?.temp?.map((temps) => (
+                {/* {cde?.temp?.map((temps) => ( */}
                   <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/officel/512/${temps.icon}.png`,
+                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
                     }}
                     style={{ width: 32, height: 32 }}
                   />
-                ))}
+                {/* ))} */}
               </View>
 
               <Text style={{ marginLeft: 20, height: 24 }}>
-                {cde?.orderNum}
+                {cde?.barcode}
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -67,36 +74,38 @@ const OrderList = ({ orderListData }) => {
             <Text style={{ textAlign: "center" }}>Aucune commande trouvée</Text>
           </View>
         ) : (
-          orderfilterByStore?.map((cde, indx) => (
+          orderfilterByStoreTest?.map((cde, indx) => (
             <View key={indx} style={styles.orderCont}>
-              <View style={{ flexDirection: "row", width: 50 }}>
-                {cde?.temp?.map((temps) => (
-                  <Image
+              <View>
+                {/* {cde?.temp?.map((temps) => ( */}
+                <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/color/512/${temps.icon}.png`,
+                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
                     }}
                     style={{ width: 32, height: 32 }}
                   />
-                ))}
+                {/* ))} */}
               </View>
 
               <Text
                 style={{
                   textAlign: "center",
                   width: 150,
-                  marginLeft: 20,
+                  // marginLeft: 20,
                   height: 24,
                 }}
               >
-                {cde?.orderNum}
+                {cde?.barcode}
               </Text>
               <TouchableOpacity
                 onPress={() => {
                   setSelectedOrder(cde);
                 }}
               >
-                <Text style={{ marginLeft: 20, height: 25 }}>
+                <Text style={{ 
+                  alignText: 'right',
+                   height: 25   }}>
                   <Icon name="qrcode" size={24} color="#5d5d5d"></Icon>
                 </Text>
               </TouchableOpacity>

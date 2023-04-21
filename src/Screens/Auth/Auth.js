@@ -21,13 +21,13 @@ import AuthService from '../../services/Auth/AuthService'
 import UserService from '../../services/UserService'
 
 const Auth = ({ navigation, AppStates }) => {
-  const { setFilteredUserData, filteredUserData, setIsLogged } = AppStates
+  const { setFilteredUserData, filteredUserData, setIsLogged,token, setToken } = AppStates
 
   
   const [usersData, setUsersData] = useState([])
   const [userName, setUserName] = useState('')
   const [pass, setPass] = useState('')
-  const [token, setToken] = useState('')
+  // const [token, setToken] = useState('')
   const [isError, setIsError] = useState(false)
   const [isLoadingAuth, setIsLoadingAuth] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
