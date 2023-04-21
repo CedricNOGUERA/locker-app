@@ -13,6 +13,7 @@ import ScanPage from "../Components/ScanPage/ScanPage";
 import { _searchWithRegex } from "../../utils/functions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import OrdersService from "../../services/Orders/OrdersService";
+import BookingSlotservice from "../../services/BookingSlot/BookingSlotservice";
 
 export default function Home({ navigation, AppStates }) {
   /********************************
@@ -29,7 +30,9 @@ export default function Home({ navigation, AppStates }) {
     filteredUserData,
    setFilteredUserData,
    token, setToken,
-   test, setTest
+   test, setTest,
+   allSlot, setAllSlot,
+   selectedOrderCity, setSelectedOrderCity
   } = AppStates;
   
   /********************************
@@ -40,7 +43,9 @@ export default function Home({ navigation, AppStates }) {
   
   const [searchOrder, setSearchOrder] = useState("");
   const [filteredData, setFilteredData] = useState("");
-  
+  const bookingLocker =  allSlot?.["hydra:member"] && allSlot?.["hydra:member"]?.map((locker) => locker?.slot?.temperatureZone?.locker)
+
+  console.log(bookingLocker)
   /********************************
   * useEffect
   *******************************/
@@ -48,6 +53,7 @@ export default function Home({ navigation, AppStates }) {
   useEffect(() => {
    
   getallOrders(token)
+  getBookingAllSlot(token)
   }, []);
 
   useEffect(() => {
@@ -56,6 +62,24 @@ export default function Home({ navigation, AppStates }) {
   }
   }, [isLogged]);
   
+  useEffect(() => {
+    setSelectedOrderCity(
+      allSlot?.['hydra:member']
+        ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.city
+        : ''
+    )
+    setSelectedStore(
+      allSlot?.['hydra:member']
+        ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.location
+        : ''
+    )
+  }, [allSlot])
+
+
+
+
+
+
   useEffect(() => {
     _searchWithRegex(searchOrder, orderfilterByStore, setFilteredData);
   }, [searchOrder]);
@@ -71,7 +95,7 @@ export default function Home({ navigation, AppStates }) {
     (cde) => cde.location === selectedStore && cde.status === "inProgress"
   );
 const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "created"
-//  && order.bookingSlot.slot.temperatureZone.locker.location === selectedStore
+//  && order?.bookingSlot?.slot?.temperatureZone?.locker?.location === selectedStore
  )
 
 
@@ -83,9 +107,14 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     })
   }
 
+  const getBookingAllSlot = (token) => {
+    BookingSlotservice.allSlot(token).then((response) => {
+      setAllSlot(response.data)
+    })
+  }
 
-  console.log(orderfilterByStoreTest)
-  console.log(orderfilterByStore)
+
+  console.log(allSlot)
 
 
   
@@ -141,13 +170,15 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     setSearchOrder,
     setModalVisible,
     modalVisible,
-    selectedStore,
+    selectedOrderCity,
   };
   const podModalData = {
     modalVisible,
     setModalVisible,
     deliveryPoint,
     setSelectedStore,
+    bookingLocker,
+    setSelectedOrderCity,
   };
   const orderListData = {
     searchbarData,

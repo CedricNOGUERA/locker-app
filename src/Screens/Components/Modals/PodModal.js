@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 const PodModal = ({ podModalData }) => {
-  const { modalVisible, setModalVisible, deliveryPoint, setSelectedStore } =
+  const { modalVisible, setModalVisible, deliveryPoint, setSelectedStore, bookingLocker, setSelectedOrderCity, } =
     podModalData;
 
   return (
@@ -26,16 +26,16 @@ const PodModal = ({ podModalData }) => {
           <View>
             <Text style={styles.title}>Sélectionnez un point de livraison</Text>
           </View>
-          {deliveryPoint?.map((pos) => (
+          {bookingLocker?.map((pos) => (
             <TouchableOpacity
-              key={pos.id}
+              key={Math.random()}
               style={styles.buttonModal}
               onPress={() => {
                 setModalVisible(!modalVisible);
-                setSelectedStore(`${pos.name}`);
+                setSelectedOrderCity(`${pos.city}`);
               }}
             >
-              <Text style={styles.textModal}>{pos.name}</Text>
+              <Text style={styles.textModal}>{pos?.location}</Text>
             </TouchableOpacity>
           ))}
 

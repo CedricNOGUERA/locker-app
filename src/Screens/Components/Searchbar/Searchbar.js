@@ -5,7 +5,7 @@ import IconFont from "react-native-vector-icons/FontAwesome5";
 
 const Searchbar = ({searchbarData}) => {
 
-  const {handleShowPodModal, searchOrder, selectedStore, handleSearch } = searchbarData
+  const {handleShowPodModal, searchOrder, selectedOrderCity, handleSearch } = searchbarData
 
   return (
     <View style={styles.searchCont}>
@@ -36,7 +36,7 @@ const Searchbar = ({searchbarData}) => {
               }}
             >
               {" "}
-              {selectedStore}{" "}
+              {selectedOrderCity}{" "}
               <IconFont name="chevron-down" size={8} color="#595959"></IconFont>
             </Text>
         </View>

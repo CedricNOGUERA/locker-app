@@ -2818,9 +2818,12 @@ export default function AppState() {
     const [test, setTest] = useState([]);
 
  
-    const [selectedStore, setSelectedStore] = useState("Punaauia");
+    const [selectedStore, setSelectedStore] = useState();
+    const [selectedOrderCity, setSelectedOrderCity] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const [token, setToken] = useState('')
+    const [allSlot, setAllSlot] = useState([])
+
 
 
     const AppStates = {
@@ -2835,7 +2838,9 @@ export default function AppState() {
         filteredUserData, 
         setFilteredUserData,
         test, setTest,
-        token, setToken
+        token, setToken,
+        allSlot, setAllSlot,
+        selectedOrderCity, setSelectedOrderCity
         
     }
 
