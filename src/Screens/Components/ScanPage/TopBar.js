@@ -11,64 +11,72 @@ import IconFont from "react-native-vector-icons/FontAwesome5";
 const TopBar = ({ topBarData }) => {
   const { setSelectedOrder, selectedOrder } = topBarData;
 
+
+  console.log(selectedOrder?.bookingSlot?.slot?.temperatureZone["@id"])
+
   return (
     <View style={styles.searchCont}>
       <View style={styles.goBackButtom}>
         <TouchableOpacity
           onPress={() => {
-            setSelectedOrder(null);
+            setSelectedOrder(null)
           }}
         >
           <Text>
-            {" "}
-            <IconFont
-              name="arrow-circle-left"
-              size={24}
-              color="#00caed"
-            ></IconFont>
+            {' '}
+            <IconFont name='arrow-circle-left' size={24} color='#00caed'></IconFont>
           </Text>
         </TouchableOpacity>
       </View>
       <View
         style={{
           flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           marginLeft: 65,
           paddingHorizontal: 5,
         }}
       >
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
           <Text
             style={{
-              textAlign: "center",
-              color: "#fff",
-              fontWeight: "bold",
+              textAlign: 'center',
+              color: '#fff',
+              fontWeight: 'bold',
             }}
           >
-            # {selectedOrder.id}
+            # {selectedOrder.barcode}
           </Text>
         </View>
 
         <View style={styles.iconOrder}>
-          {selectedOrder?.temp?.map((temps) => (
-            <Image
-              key={Math.random()}
-              source={{
-                uri: `https://img.icons8.com/officel/512/${temps.icon}.png`,
-              }}
-              style={{ width: 24, height: 24 }}
-            />
-          ))}
+          <Image
+            key={Math.random()}
+            source={{
+              uri: `https://img.icons8.com/officel/512/${
+                selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
+                '/api/temperature_zones/3'
+                  ? 'dry'
+                  : selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
+                    '/api/temperature_zones/2'
+                  ? 'organic-food'
+                  : selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
+                    '/api/temperature_zones/1'
+                  ? 'winter'
+                  : '?'
+              }.png`,
+            }}
+            style={{ width: 24, height: 24 }}
+          />
         </View>
       </View>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({

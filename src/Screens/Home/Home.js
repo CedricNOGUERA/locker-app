@@ -1,7 +1,6 @@
 import {
   View,
   StyleSheet,
-  // DrawerLayoutAndroid,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import GlobalFooter from "../../Footer/GlobalFooter";
@@ -11,7 +10,6 @@ import PodModal from "../Components/Modals/PodModal";
 import OrderList from "../Components/OrderList/OrderList";
 import ScanPage from "../Components/ScanPage/ScanPage";
 import { _searchWithRegex } from "../../utils/functions";
-import { SafeAreaView } from "react-native-safe-area-context";
 import OrdersService from "../../services/Orders/OrdersService";
 import BookingSlotservice from "../../services/BookingSlot/BookingSlotservice";
 
@@ -32,20 +30,20 @@ export default function Home({ navigation, AppStates }) {
    token, setToken,
    test, setTest,
    allSlot, setAllSlot,
-   selectedOrderCity, setSelectedOrderCity
+   selectedOrderCity, setSelectedOrderCity,
+   modalVisible, setModalVisible
   } = AppStates;
   
   /********************************
   * States
   *******************************/
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalStoreVisible, setModalStoreVisible] = useState(false);
   
   const [searchOrder, setSearchOrder] = useState("");
   const [filteredData, setFilteredData] = useState("");
   const bookingLocker =  allSlot?.["hydra:member"] && allSlot?.["hydra:member"]?.map((locker) => locker?.slot?.temperatureZone?.locker)
 
-  console.log(bookingLocker)
   /********************************
   * useEffect
   *******************************/
@@ -84,7 +82,6 @@ export default function Home({ navigation, AppStates }) {
     _searchWithRegex(searchOrder, orderfilterByStore, setFilteredData);
   }, [searchOrder]);
 
-  console.log(test)
   
 
   /********************************
@@ -95,9 +92,10 @@ export default function Home({ navigation, AppStates }) {
     (cde) => cde.location === selectedStore && cde.status === "inProgress"
   );
 const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "created"
-//  && order?.bookingSlot?.slot?.temperatureZone?.locker?.location === selectedStore
+ && order?.bookingSlot?.slot?.temperatureZone?.locker?.city === selectedOrderCity
  )
 
+ console.log(selectedOrderCity)
 
   const getallOrders = (token) => {
     OrdersService.allOrders(token).then((response) => {
@@ -114,7 +112,6 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
   }
 
 
-  console.log(allSlot)
 
 
   
@@ -132,7 +129,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
   
   const handleShowPodModal = () => {
     setSearchOrder("");
-    setModalVisible(!modalVisible);
+    setModalStoreVisible(!modalStoreVisible);
   };
 
   /********************************
@@ -152,7 +149,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
       firstNameCustom: filteredOrder[0].firstNameCustom,
       LastNameCustom: filteredOrder[0].LastNameCustom,
       detailOrder: filteredOrder[0].detailOrder,
-      status: "delivered",
+      status: "operin",
     };
     newTab[indx] = newStatus;
     setOrderData(newTab);
@@ -168,13 +165,13 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     handleSearch,
     searchOrder,
     setSearchOrder,
-    setModalVisible,
-    modalVisible,
+    setModalStoreVisible,
+    modalStoreVisible,
     selectedOrderCity,
   };
   const podModalData = {
-    modalVisible,
-    setModalVisible,
+    modalStoreVisible,
+    setModalStoreVisible,
     deliveryPoint,
     setSelectedStore,
     bookingLocker,
@@ -184,34 +181,40 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     searchbarData,
     orderfilterByStore,
     orderfilterByStoreTest,
-    
     filteredData,
     setSelectedOrder,
     searchOrder,
   };
   const scanPageData = { updateStatus, setSelectedOrder, selectedOrder };
-  const headerData = { navigation, isLogged, setIsLogged,filteredUserData, setFilteredUserData, updateStatus, setSelectedOrder, selectedOrder };
+  const headerData = {
+    navigation,
+    isLogged,
+    setIsLogged,
+    filteredUserData,
+    setFilteredUserData,
+    updateStatus,
+    setSelectedOrder,
+    selectedOrder,
+    modalVisible,
+    setModalVisible,
+  }
   
  
   return (
     <View style={styles.screen}>
-      <GlobalHeader headerData={headerData} tilteHeader={"Commande en cours"} />
-      <StatusBar style="light" animation={true} backgroundColor={"#a1a1a1"} />
+      <GlobalHeader headerData={headerData} tilteHeader={'Commande en cours'} />
+      <StatusBar style='light' animation={true} backgroundColor={'#a1a1a1'} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
-          <>
-
           <OrderList orderListData={orderListData} />
-          {/* <DrawerLayoutAndroid drawerBackgroundColor="rgba(0,0,0,0.5)" /> */}
-          </>
         ) : (
           <ScanPage scanPageData={scanPageData} />
         )}
       </View>
       <PodModal podModalData={podModalData} />
-      <GlobalFooter AppStates={AppStates} navigation={navigation} />
+      <GlobalFooter AppStates={AppStates} test={test} navigation={navigation} />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

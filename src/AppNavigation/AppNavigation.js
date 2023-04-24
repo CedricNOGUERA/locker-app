@@ -6,6 +6,7 @@ import Home from '../Screens/Home/Home';
 import ToRetrieve from '../Screens/ToRetrieve/ToRetrieve';
 import Delivered from '../Screens/Delivered/Delivered';
 import Auth from '../Screens/Auth/Auth';
+import NewOrder from '../Screens/newOrder/NewOrder';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,9 @@ export default function AppNavigation({ AppStates }) {
         </Stack.Screen>
         <Stack.Screen name="Delivered" options={{headerShown: false}}>
           {(props) => <Delivered {...props} AppStates={AppStates} />}
+        </Stack.Screen>
+        <Stack.Screen name="NewOrder" options={{headerShown: false}}>
+          {(props) => <NewOrder {...props} AppStates={AppStates} />}
         </Stack.Screen>
 
         

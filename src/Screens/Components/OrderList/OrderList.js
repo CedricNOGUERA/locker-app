@@ -35,15 +35,13 @@ const OrderList = ({ orderListData }) => {
           filteredData?.map((cde, indx) => (
             <View key={indx} style={styles.orderCont}>
               <View style={{ flexDirection: "row" }}>
-                {/* {cde?.temp?.map((temps) => ( */}
                   <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
+                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/2" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
                     }}
                     style={{ width: 32, height: 32 }}
                   />
-                {/* ))} */}
               </View>
 
               <Text style={{ marginLeft: 20, height: 24 }}>
@@ -81,7 +79,7 @@ const OrderList = ({ orderListData }) => {
                 <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
+                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/2" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : "?"}.png`,
                     }}
                     style={{ width: 32, height: 32 }}
                   />

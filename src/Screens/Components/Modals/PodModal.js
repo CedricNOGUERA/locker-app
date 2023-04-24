@@ -8,17 +8,17 @@ import {
 } from "react-native";
 
 const PodModal = ({ podModalData }) => {
-  const { modalVisible, setModalVisible, deliveryPoint, setSelectedStore, bookingLocker, setSelectedOrderCity, } =
+  const { modalStoreVisible, setModalStoreVisible, deliveryPoint, setSelectedStore, bookingLocker, setSelectedOrderCity, } =
     podModalData;
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={modalStoreVisible}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
-        setModalVisible(!modalVisible);
+        setModalStoreVisible(!modalStoreVisible);
       }}
     >
       <View style={styles.centeredView}>
@@ -31,7 +31,7 @@ const PodModal = ({ podModalData }) => {
               key={Math.random()}
               style={styles.buttonModal}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setModalStoreVisible(!modalStoreVisible);
                 setSelectedOrderCity(`${pos.city}`);
               }}
             >
@@ -46,7 +46,7 @@ const PodModal = ({ podModalData }) => {
               styles.buttonClose,
               styles.modalText,
             ]}
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => setModalStoreVisible(!modalStoreVisible)}
           >
             <Text style={styles.textStyle}>Annuler</Text>
           </TouchableOpacity>

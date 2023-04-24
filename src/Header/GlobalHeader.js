@@ -8,10 +8,11 @@ import QRCode from 'react-native-qrcode-svg'
 import LogoutModal from '../Screens/Components/Modals/LogoutModal'
 
 export default function GlobalHeader({ headerData, tilteHeader }) {
-  const { navigation, isLogged, setIsLogged, filteredUserData, setFilteredUserData, updateStatus, setSelectedOrder, selectedOrder } =
+  const { navigation, isLogged, setIsLogged, filteredUserData, setFilteredUserData, updateStatus, setSelectedOrder, selectedOrder,
+    modalVisible, setModalVisible } =
     headerData
 
-  const [modalVisible, setModalVisible] = useState(false)
+  // const [modalVisible, setModalVisible] = useState(false)
   const [modalLogoutVisible, setModalLogoutVisible] = useState(false)
   const [modalAuthVisible, setModalAuthVisible] = useState(false)
   const [company, setCompany] = useState("")
@@ -20,11 +21,12 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
     if (isLogged === false) {
       navigation.navigate('Auth')
     }
+  }, [])
+  useEffect(() => {
     if(filteredUserData?.memberOf){
       setCompany(filteredUserData?.memberOf[0]?.name)
     }
-  }, [])
-console.log(filteredUserData)
+  }, [filteredUserData])
 
   return (
     <View style={styles.headerCont}>
@@ -106,7 +108,11 @@ console.log(filteredUserData)
               >
                 <IconMCI name='qrcode' size={24} color='#fff'></IconMCI> Identification
               </Text>
-              <Text style={{ marginBottom: 120, height: 24, fontSize: 20, color: '#fff' }}>
+              <Text style={{ marginBottom: 120, height: 24, fontSize: 20, color: '#fff' }}
+                onPress={() => {
+                  setModalVisible(false)
+                  navigation?.navigate("NewOrder")}}
+              >
                 <IconMCI name='file-document-edit-outline' size={24} color='#fff'></IconMCI>{' '}
                 Nouvelle commande
               </Text>

@@ -15,6 +15,7 @@ const ScanPage = ({ scanPageData }) => {
 
   const topBarData = { setSelectedOrder, selectedOrder };
 
+  console.log(selectedOrder)
   return (
     <>
 
@@ -60,7 +61,7 @@ const ScanPage = ({ scanPageData }) => {
             paddingVertical: 25,
             }}
             >
-            <QRCode value={selectedOrder.orderNum} size={320}   />
+            <QRCode value={selectedOrder.barcode} size={320}   />
           </TouchableOpacity>
         </View>
         <View>
@@ -86,7 +87,7 @@ const ScanPage = ({ scanPageData }) => {
             fontWeight: "bold",
           }}
         >
-          {selectedOrder.orderNum}
+          {selectedOrder.barcode}
         </Text>
       </View>
     </ScrollView>

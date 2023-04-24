@@ -2825,6 +2825,9 @@ export default function AppState() {
     const [allSlot, setAllSlot] = useState([])
 
 
+    const [modalVisible, setModalVisible] = useState(false)
+
+
 
     const AppStates = {
         commandes,
@@ -2840,7 +2843,8 @@ export default function AppState() {
         test, setTest,
         token, setToken,
         allSlot, setAllSlot,
-        selectedOrderCity, setSelectedOrderCity
+        selectedOrderCity, setSelectedOrderCity,
+        modalVisible, setModalVisible
         
     }
 

@@ -7,14 +7,17 @@ import {
 } from "react-native";
 import IconEntypo from "react-native-vector-icons/Entypo";
 
-export default function GlobalFooter({ navigation, AppStates }) {
+export default function GlobalFooter({ navigation, AppStates, test }) {
 
   const {orderData, selectedStore} = AppStates
 
 
-  const retrieve = orderData?.filter((order) => order.status === "toRetrieve" && order.location === selectedStore)
-  const progress = orderData?.filter((order) => order.status === "inProgress" && order.location === selectedStore)
-  const delivered = orderData?.filter((order) => order.status === "delivered" && order.location === selectedStore)
+  // const retrieve = orderData?.filter((order) => order.status === "toRetrieve" && order.location === selectedStore)
+  // const delivered = orderData?.filter((order) => order.status === "delivered" && order.location === selectedStore)
+  
+  const progress = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "created" && order.bookingSlot.slot.temperatureZone.locker.location === selectedStore)
+  const delivered = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "receive" && order.bookingSlot.slot.temperatureZone.locker.location === selectedStore)
+  const retrieve = test["hydra:member"] && test["hydra:member"]?.filter((order) => order.status === "overtime" && order.bookingSlot.slot.temperatureZone.locker.location === selectedStore)
 
 
   return (
