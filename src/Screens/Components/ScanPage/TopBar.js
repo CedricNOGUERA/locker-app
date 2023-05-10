@@ -58,18 +58,8 @@ const TopBar = ({ topBarData }) => {
           <Image
             key={Math.random()}
             source={{
-              uri: `https://img.icons8.com/officel/512/${
-                selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
-                '/api/temperature_zones/3'
-                  ? 'dry'
-                  : selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
-                    '/api/temperature_zones/2'
-                  ? 'organic-food'
-                  : selectedOrder?.bookingSlot?.slot?.temperatureZone['@id'] ===
-                    '/api/temperature_zones/1'
-                  ? 'winter'
-                  : '?'
-              }.png`,
+              uri: `https://img.icons8.com/color/512/${selectedOrder?.bookingSlot?.slot?.temperatureZone?.keyTemp === "FRESH" || selectedOrder?.bookingSlot.slot.temperatureZone?.myKey === "C" ? "organic-food" : (selectedOrder?.bookingSlot.slot.temperatureZone?.keyTemp === "FREEZE" || selectedOrder?.bookingSlot.slot.temperatureZone?.myKey === "F") ? "winter"  : (selectedOrder?.bookingSlot.slot.temperatureZone?.keyTemp === "NORMAL" || selectedOrder?.bookingSlot.slot.temperatureZone?.myKey === "CA") ? "dry" : ""}.png`,
+
             }}
             style={{ width: 24, height: 24 }}
           />

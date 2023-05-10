@@ -24,6 +24,8 @@ const OrderList = ({ orderListData }) => {
   const tempZone = orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""
 
 
+  console.log(orderfilterByStoreTest)
+
 
 
   return (
@@ -38,9 +40,9 @@ const OrderList = ({ orderListData }) => {
                   <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/2" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""}.png`,
+                      uri: `https://img.icons8.com/color/512/${cde?.bookingSlot?.slot?.temperatureZone?.keyTemp === "FRESH" || cde?.bookingSlot.slot.temperatureZone?.myKey === "C" ? "organic-food" : (cde?.bookingSlot.slot.temperatureZone?.keyTemp === "FREEZE" || cde?.bookingSlot.slot.temperatureZone?.myKey === "F") ? "winter"  : (cde?.bookingSlot.slot.temperatureZone?.keyTemp === "NORMAL" || cde?.bookingSlot.slot.temperatureZone?.myKey === "CA") ? "dry" : ""}.png`,
                     }}
-                    style={{ width: 32, height: 32 }}
+                    style={{ width: 36, height: 36 }}
                   />
               </View>
 
@@ -79,9 +81,10 @@ const OrderList = ({ orderListData }) => {
                 <Image
                     key={Math.random()}
                     source={{
-                      uri: `https://img.icons8.com/officel/512/${cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3" ? "dry" : cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/2" ? "organic-food"  : (cde?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : "?"}.png`,
+                      uri: `https://img.icons8.com/color/512/${cde?.bookingSlot?.slot?.temperatureZone?.keyTemp === "FRESH" || cde?.bookingSlot.slot.temperatureZone?.myKey === "C" ? "organic-food" : (cde?.bookingSlot.slot.temperatureZone?.keyTemp === "FREEZE" || cde?.bookingSlot.slot.temperatureZone?.myKey === "F") ? "winter"  : (cde?.bookingSlot.slot.temperatureZone?.keyTemp === "NORMAL" || cde?.bookingSlot.slot.temperatureZone?.myKey === "CA") ? "dry" : ""}.png`,
+
                     }}
-                    style={{ width: 32, height: 32 }}
+                    style={{ width: 36, height: 36 }}
                   />
                 {/* ))} */}
               </View>

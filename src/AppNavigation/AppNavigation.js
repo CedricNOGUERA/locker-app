@@ -7,6 +7,7 @@ import ToRetrieve from '../Screens/ToRetrieve/ToRetrieve';
 import Delivered from '../Screens/Delivered/Delivered';
 import Auth from '../Screens/Auth/Auth';
 import NewOrder from '../Screens/newOrder/NewOrder';
+import DashBoard from '../Screens/DashBoard/DashBoard';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,10 @@ export default function AppNavigation({ AppStates }) {
        
         <Stack.Screen name="Auth" options={{headerShown: false}}>
           {(props) => <Auth {...props} AppStates={AppStates} />}
+        </Stack.Screen>
+        
+        <Stack.Screen name="DashBoard" options={{headerShown: false}}>
+          {(props) => <DashBoard {...props} AppStates={AppStates} />}
         </Stack.Screen>
         
         <Stack.Screen name="Home" options={{headerShown: false}}>

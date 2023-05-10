@@ -95,7 +95,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
  && order?.bookingSlot?.slot?.temperatureZone?.locker?.city === selectedOrderCity
  )
 
- console.log(selectedOrderCity)
+//  console.log(selectedOrderCity)
 
   const getallOrders = (token) => {
     OrdersService.allOrders(token).then((response) => {
@@ -155,6 +155,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     setOrderData(newTab);
   };
 
+  console.log(process.env)
   
   /********************************
    * Components props
@@ -202,7 +203,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
  
   return (
     <View style={styles.screen}>
-      <GlobalHeader headerData={headerData} tilteHeader={'Commande en cours'} />
+      <GlobalHeader headerData={headerData} tilteHeader={'A livrer'} icon="truck-fast-outline" />
       <StatusBar style='light' animation={true} backgroundColor={'#a1a1a1'} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
@@ -212,7 +213,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
         )}
       </View>
       <PodModal podModalData={podModalData} />
-      <GlobalFooter AppStates={AppStates} test={test} navigation={navigation} />
+      <GlobalFooter AppStates={AppStates} test={test} navigation={navigation} filteredUserData={filteredUserData} />
     </View>
   )
 }

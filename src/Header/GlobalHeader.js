@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import IconEntypo from 'react-native-vector-icons/Entypo'
 import IconFont from 'react-native-vector-icons/FontAwesome5'
 import { useState, useEffect } from 'react'
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,15 +7,24 @@ import Feather from 'react-native-vector-icons/Feather'
 import QRCode from 'react-native-qrcode-svg'
 import LogoutModal from '../Screens/Components/Modals/LogoutModal'
 
-export default function GlobalHeader({ headerData, tilteHeader }) {
-  const { navigation, isLogged, setIsLogged, filteredUserData, setFilteredUserData, updateStatus, setSelectedOrder, selectedOrder,
-    modalVisible, setModalVisible } =
-    headerData
+export default function GlobalHeader({ headerData, tilteHeader, icon }) {
+  const {
+    navigation,
+    isLogged,
+    setIsLogged,
+    filteredUserData,
+    setFilteredUserData,
+    updateStatus,
+    setSelectedOrder,
+    selectedOrder,
+    modalVisible,
+    setModalVisible,
+  } = headerData
 
   // const [modalVisible, setModalVisible] = useState(false)
   const [modalLogoutVisible, setModalLogoutVisible] = useState(false)
   const [modalAuthVisible, setModalAuthVisible] = useState(false)
-  const [company, setCompany] = useState("")
+  const [company, setCompany] = useState('')
 
   useEffect(() => {
     if (isLogged === false) {
@@ -23,20 +32,53 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
     }
   }, [])
   useEffect(() => {
-    if(filteredUserData?.memberOf){
+    if (filteredUserData?.memberOf) {
       setCompany(filteredUserData?.memberOf[0]?.name)
     }
   }, [filteredUserData])
 
   return (
     <View style={styles.headerCont}>
-      <View style={styles.leftBlock}>
-        <Text style={{ marginHorizontal: 10, padding: 0 }}>
+      {/* <View style={styles.leftBlock}>
+        <Text style={{ marginHorizontal: 0, padding: 0 }}>
           <IconMCI name='truck-fast-outline' size={24} color='#00caed' />
         </Text>
+      </View> */}
+      <TouchableOpacity
+        style={{ fex: 1, flexDirection: 'row', marginLeft: 0, alignItems: 'center' }}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={{ paddingHorizontal: 25, color: 'white' }}>
+        {icon === "truck-fast-outline" ? 
+        <IconMCI name={icon} size={31} color='#00caed' />
+        :
+        <IconEntypo name={icon} size={31} color="#00caed"></IconEntypo>
+        }
+        </Text>
+      </TouchableOpacity>
+      <View
+        style={{
+          flex:2,
+          flexDirection: 'column',
+          textAlign: 'center',
+          color: 'white',
+          fontSize: 18,
+          width: 250,
+          margin: 'auto',
+        }}
+      >
+      <Text style={{
+            textAlign: 'center',
+          }}>
+
+        <Image
+          source={require('../assets/images/farerata.png')}
+          style={{ resizeMode: 'contain', width: 32, height: 32 }}
+        />
+      </Text>
         <Text
           style={{
-            textAlign: 'left',
+            textAlign: 'center',
             color: 'white',
             fontSize: 18,
             fontWeight: 'bold',
@@ -46,17 +88,11 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
         </Text>
       </View>
       <TouchableOpacity
-        style={{ flexDirection: 'row', marginLeft: 10, alignItems: 'center' }}
+        style={{ fex: 1, flexDirection: 'row', marginLeft: 0, alignItems: 'center' }}
         onPress={() => setModalVisible(true)}
       >
-        <View  onPress={() => setModalVisible(true)}>
-          <Image
-            source={require('../assets/images/farerata.png')}
-            style={{ resizeMode: 'contain', width: 32, height: 32 }}
-          />
-        </View>
         <Text style={{ paddingHorizontal: 25, color: 'white' }}>
-          {filteredUserData.firstName}
+          <Feather name='more-horizontal' size={24} color='#00caed' />
         </Text>
       </TouchableOpacity>
 
@@ -82,7 +118,9 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
                 marginBottom: 40,
               }}
             >
-              <Text style={styles.modalText}>{filteredUserData?.firstName} - {company} </Text>
+              <Text style={styles.modalText}>
+                {filteredUserData?.firstName} - {company}{' '}
+              </Text>
               <TouchableOpacity
                 style={[styles.butto, styles.buttonCance]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -108,13 +146,34 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
               >
                 <IconMCI name='qrcode' size={24} color='#fff'></IconMCI> Identification
               </Text>
-              <Text style={{ marginBottom: 120, height: 24, fontSize: 20, color: '#fff' }}
+              <Text
+                style={{ marginBottom: 40, height: 24, fontSize: 20, color: '#fff' }}
                 onPress={() => {
                   setModalVisible(false)
-                  navigation?.navigate("NewOrder")}}
+                  navigation?.navigate('DashBoard')
+                }}
+              >
+                <Feather name='pie-chart' size={24} color='#fff'></Feather> Tableau de bord
+              </Text>
+              <Text
+                style={{ marginBottom: 40, height: 24, fontSize: 20, color: '#fff' }}
+                onPress={() => {
+                  setModalVisible(false)
+                  navigation?.navigate('NewOrder')
+                }}
               >
                 <IconMCI name='file-document-edit-outline' size={24} color='#fff'></IconMCI>{' '}
                 Nouvelle commande
+              </Text>
+              <Text
+                style={{ marginBottom: 120, height: 24, fontSize: 20, color: '#fff' }}
+                onPress={() => {
+                  setModalVisible(false)
+                  navigation?.navigate('NewOrder')
+                }}
+              >
+                <IconMCI name='lock-reset' size={24} color='#fff'></IconMCI>{' '}
+                Modifier mot de passe
               </Text>
               <Text style={{ marginBottom: 20, height: 24, fontSize: 20, color: '#fff' }}>
                 <TouchableOpacity
@@ -165,7 +224,9 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
                 marginBottom: 5,
               }}
             >
-              <Text style={styles.modalText}>Authentification de {filteredUserData?.firstName}</Text>
+              <Text style={styles.modalText}>
+                Authentification de {filteredUserData?.firstName}
+              </Text>
               <TouchableOpacity
                 style={[styles.butto, styles.buttonCance]}
                 onPress={() => setModalAuthVisible(false)}
@@ -182,7 +243,6 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
                 paddingVertical: 0,
               }}
             >
-            
               <Text style={styles?.qrcodeDirection}>Haut du qrcode</Text>
               <View
                 style={{
@@ -208,17 +268,18 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
                   <IconFont name='arrow-up' size={24} color='#db2d02'></IconFont>
                 </Text>
               </View>
-              <View style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    paddingVertical: 25,
-                  }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingVertical: 25,
+                }}
+              >
                 <TouchableOpacity
                   onPress={() => {
                     setSelectedOrder(null)
                     // updateStatus(selectedOrder?.id)
                   }}
-               
                 >
                   <QRCode value={`${filteredUserData?.id}`} size={280} />
                 </TouchableOpacity>
@@ -234,9 +295,7 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
                 >
                   Respectez le sens du qrcode lors du scan
                 </Text>
-                <View
-                 style={styles.maunalEntry}
-                >
+                <View style={styles.maunalEntry}>
                   <Text style={{ color: '#fff', textAlign: 'center' }}>
                     Saisie manuelle du qrcode
                   </Text>
@@ -257,8 +316,12 @@ export default function GlobalHeader({ headerData, tilteHeader }) {
       </Modal>
 
       {/* Confirm logout */}
-      
-      <LogoutModal modalLogoutVisible={modalLogoutVisible} setModalLogoutVisible={setModalLogoutVisible} setIsLogged={setIsLogged} />
+
+      <LogoutModal
+        modalLogoutVisible={modalLogoutVisible}
+        setModalLogoutVisible={setModalLogoutVisible}
+        setIsLogged={setIsLogged}
+      />
     </View>
   )
 }
@@ -284,10 +347,9 @@ const styles = StyleSheet.create({
   leftBlock: {
     flex: 1,
     flexDirection: 'row',
+    width: 50,
     height: 50,
-    borderRightWidth: 1,
-    borderRightColor: '#fff',
-    paddingLeft: 10,
+    paddingLeft: 0,
     alignItems: 'center',
   },
   centeredView: {
@@ -332,13 +394,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   qrcodeDirection: {
-    textAlign: "center",
-    color: "#db2d02",
-    fontWeight: "bold",
+    textAlign: 'center',
+    color: '#db2d02',
+    fontWeight: 'bold',
   },
   maunalEntry: {
-    
-    backgroundColor: "#898989",
+    backgroundColor: '#898989',
     borderRadius: 50,
     height: 50,
     marginVertical: 20,

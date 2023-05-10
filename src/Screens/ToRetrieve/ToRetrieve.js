@@ -202,7 +202,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
  
   return (
     <View style={styles.screen}>
-      <GlobalHeader headerData={headerData} tilteHeader={'Commandes à récupérer'} />
+      <GlobalHeader headerData={headerData} tilteHeader={'A récupérer'} icon="upload" />
       <StatusBar style='light' animation={true} backgroundColor={'#a1a1a1'} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
@@ -212,7 +212,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
         )}
       </View>
       <PodModal podModalData={podModalData} />
-      <GlobalFooter AppStates={AppStates} test={test} navigation={navigation} />
+      <GlobalFooter AppStates={AppStates} test={test} navigation={navigation} filteredUserData={filteredUserData} />
     </View>
   )
 }
