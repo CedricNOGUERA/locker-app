@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Modal,
   View,
@@ -8,8 +9,27 @@ import {
 } from "react-native";
 
 const PodModal = ({ podModalData }) => {
-  const { modalStoreVisible, setModalStoreVisible, deliveryPoint, setSelectedStore, bookingLocker, setSelectedOrderCity, } =
+  const { modalStoreVisible, setModalStoreVisible, setSelectedStore, bookingLocker, setSelectedOrderCity, } =
     podModalData;
+
+    const [uniqueTab, setUniqueTab] = React.useState([])
+    const [cityTab, setCityTab] = React.useState([])
+
+  React.useEffect(() => {
+    // const bookingLocker = allSlot?.['hydra:member']?.map(
+    //   (locker) => locker?.slot?.temperatureZone?.locker
+    // )
+    const deduplicate = [...new Set(bookingLocker?.map((locker) => locker.location))]
+    setUniqueTab(deduplicate)
+
+
+    const deduplicateCity = [...new Set(bookingLocker?.map((locker) => locker.city))]
+    setCityTab(deduplicateCity)
+
+  }, [bookingLocker])
+
+  console.log(bookingLocker)
+  console.log(uniqueTab)
 
   return (
     <Modal
@@ -26,16 +46,18 @@ const PodModal = ({ podModalData }) => {
           <View>
             <Text style={styles.title}>Sélectionnez un point de livraison</Text>
           </View>
-          {bookingLocker?.map((pos) => (
+          {/* {bookingLocker?.map((pos) => ( */}
+          {uniqueTab?.map((pos, indx) => (
             <TouchableOpacity
               key={Math.random()}
               style={styles.buttonModal}
               onPress={() => {
                 setModalStoreVisible(!modalStoreVisible);
-                setSelectedOrderCity(`${pos.city}`);
+                setSelectedOrderCity(`${cityTab[indx]}`);
+                setSelectedStore(pos)
               }}
             >
-              <Text style={styles.textModal}>{pos?.location}</Text>
+              <Text style={styles.textModal}>{pos}</Text>
             </TouchableOpacity>
           ))}
 

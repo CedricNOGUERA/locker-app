@@ -50,7 +50,7 @@ export default function ToRerieve({ navigation, AppStates }) {
 
   useEffect(() => {
    
-  getallOrders(token)
+  // getallOrders(token)
   getBookingAllSlot(token)
   }, []);
 
@@ -60,18 +60,18 @@ export default function ToRerieve({ navigation, AppStates }) {
   }
   }, [isLogged]);
   
-  useEffect(() => {
-    setSelectedOrderCity(
-      allSlot?.['hydra:member']
-        ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.city
-        : ''
-    )
-    setSelectedStore(
-      allSlot?.['hydra:member']
-        ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.location
-        : ''
-    )
-  }, [allSlot])
+  // useEffect(() => {
+  //   setSelectedOrderCity(
+  //     allSlot?.['hydra:member']
+  //       ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.city
+  //       : ''
+  //   )
+  //   setSelectedStore(
+  //     allSlot?.['hydra:member']
+  //       ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.location
+  //       : ''
+  //   )
+  // }, [allSlot])
 
 
 
@@ -95,15 +95,15 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
  && order?.bookingSlot?.slot?.temperatureZone?.locker?.city === selectedOrderCity
  )
 
- console.log(selectedOrderCity)
+ console.log(orderfilterByStoreTest)
 
-  const getallOrders = (token) => {
-    OrdersService.allOrders(token).then((response) => {
-      // setIsLoading(false)
-      setTest(response.data)
-      console.log(response.data)
-    })
-  }
+  // const getallOrders = (token) => {
+  //   OrdersService.allOrders(token).then((response) => {
+  //     // setIsLoading(false)
+  //     setTest(response.data)
+  //     console.log(response.data)
+  //   })
+  // }
 
   const getBookingAllSlot = (token) => {
     BookingSlotservice.allSlot(token).then((response) => {
@@ -136,23 +136,33 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
    * Change order status
    *******************************/
   const updateStatus = (id) => {
-    const indx = orderData?.findIndex((order) => order.id === id);
-    const filteredOrder = orderData?.filter((order) => order.id === id);
-    
-    const newTab = [...orderData];
-    const newStatus = {
-      id: filteredOrder[0].id,
-      location: filteredOrder[0].location,
-      orderNum: filteredOrder[0].orderNum,
-      temp: filteredOrder[0].temp,
-      numbContainer: filteredOrder[0].numbContainer,
-      firstNameCustom: filteredOrder[0].firstNameCustom,
-      LastNameCustom: filteredOrder[0].LastNameCustom,
-      detailOrder: filteredOrder[0].detailOrder,
-      status: "operin",
-    };
-    newTab[indx] = newStatus;
-    setOrderData(newTab);
+    let data = {
+      status: 'operout ',
+    }
+
+    let config = {
+      method: 'patch',
+      maxBodyLength: Infinity,
+      url: 'http://192.168.1.250:8000/api/orders/' + id,
+      // url: process.env.REACT_APP_END_POINT + 'orders/' + id,
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        Authorization: 'Bearer ' + token,
+      },
+      data: data,
+    }
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data)
+        getallOrders(token)
+        getBookingAllSlot(token)
+        setSelectedOrder(null)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   };
 
   

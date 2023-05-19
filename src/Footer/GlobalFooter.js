@@ -9,6 +9,7 @@ import {
 import IconEntypo from "react-native-vector-icons/Entypo";
 import IconMatCom from "react-native-vector-icons/MaterialCommunityIcons";
 import IconFeat from "react-native-vector-icons/Feather";
+import IconAntD from "react-native-vector-icons/AntDesign";
 import IconFont from "react-native-vector-icons/FontAwesome5";
 import React from "react";
 import QRCode from "react-native-qrcode-svg";
@@ -38,28 +39,7 @@ export default function GlobalFooter({ navigation, AppStates, test, filteredUser
         </Text>
         <Text style={styles.textItems}>Accueil</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => setModalAuthVisible(true)}
-        style={styles.itemFooter}
-      >
-        <Text>
-          {" "}
-          <IconFeat name="user" size={35} color="#00caed"></IconFeat>
-         
-        </Text>
-        <Text style={styles.textItems}>Auth</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("NewOrder")}
-        style={styles.itemFooter}
-      >
-        <Text style={styles.itemFooterN}>
-          {" "}
-          <IconFeat name="plus-circle" size={70} color="#00caed" ></IconFeat>
-         
-        </Text>
-        <Text style={styles.textItems}></Text>
-      </TouchableOpacity>
+      
       <TouchableOpacity
         onPress={() => navigation.navigate("Home")}
         style={styles.itemFooter}
@@ -80,6 +60,18 @@ export default function GlobalFooter({ navigation, AppStates, test, filteredUser
           )}
         </Text>
         <Text style={styles.textItems}>A livrer</Text>
+      </TouchableOpacity>
+    
+      <TouchableOpacity
+        onPress={() => navigation.navigate("NewOrder")}
+        style={styles.itemFooter}
+      >
+        <Text style={styles.itemFooterN}   onPress={() => navigation.navigate("NewOrder")}>
+          {" "}
+          <IconAntD name="pluscircle" size={70} color="#00caed" ></IconAntD>
+         
+        </Text>
+        <Text style={styles.textItems}></Text>
       </TouchableOpacity>
     
       <TouchableOpacity
@@ -111,7 +103,17 @@ export default function GlobalFooter({ navigation, AppStates, test, filteredUser
 
         <Text style={{ color: "white", fontSize: 12, }}>A récupérer</Text>
       </TouchableOpacity>
-      
+      <TouchableOpacity
+        onPress={() => setModalAuthVisible(true)}
+        style={styles.itemFooter}
+      >
+        <Text>
+          {" "}
+          <IconFeat name="user" size={35} color="#00caed"></IconFeat>
+         
+        </Text>
+        <Text style={styles.textItems}>Auth</Text>
+      </TouchableOpacity>
       <Modal
         style={{
           borderWidth: 1,
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     // width:"20%",
     position: "absolute",
     // right: "50%",
-    bottom: 25,
+    bottom: 28,
     // marginBottom: 15,
   },
   badge: {

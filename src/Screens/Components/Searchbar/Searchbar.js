@@ -5,7 +5,10 @@ import IconFont from "react-native-vector-icons/FontAwesome5";
 
 const Searchbar = ({searchbarData}) => {
 
-  const {handleShowPodModal, searchOrder, selectedOrderCity, handleSearch } = searchbarData
+  const {handleShowPodModal, searchOrder, selectedOrderCity, handleSearch, allSlot } = searchbarData
+
+
+  
 
   return (
     <View style={styles.searchCont}>

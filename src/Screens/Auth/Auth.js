@@ -19,6 +19,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { AsyncStorage } from 'react-native'
 import AuthService from '../../services/Auth/AuthService'
 import UserService from '../../services/UserService'
+import { StatusBar } from 'expo-status-bar'
 
 const Auth = ({ navigation, AppStates }) => {
   const { setFilteredUserData, filteredUserData, setIsLogged,token, setToken } = AppStates
@@ -107,6 +108,8 @@ const Auth = ({ navigation, AppStates }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.screen}
     >
+      <StatusBar style='light' animation={true} backgroundColor={'#a5a5a5'} />
+
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView style={{ width: 500, height: '100%' }}>
           <View style={styles.screen}>
@@ -118,20 +121,24 @@ const Auth = ({ navigation, AppStates }) => {
                   alignItems: 'center',
                 }}
               >
-                <IconMCI name='truck-fast-outline' size={100} color='#fff' />
+                {/* <IconMCI name='truck-fast-outline' size={100} color='#fff' /> */}
+                <Image
+                  source={require('../../assets/images/logo512.png')}
+                  style={{ resizeMode: 'contain', width: 100, height: 100 }}
+                />
                 <Text
                   style={{
                     textAlign: 'center',
                     fontSize: 50,
                     fontWeight: 'bold',
-                    color: '#fff'
+                    color: '#fff',
                   }}
                 >
                   Locker
                 </Text>
               </View>
-              <View style={{ flex: 2, width: 320, marginTop: 25}}>
-                <View style={{ flexDirection: 'row', marginBottom: 15 }}>
+              <View style={{ flex: 2, width: 320, marginTop: 25 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 25 }}>
                   <View
                     style={{
                       backgroundColor: '#b6b6b6',
@@ -149,7 +156,7 @@ const Auth = ({ navigation, AppStates }) => {
                     keyboardType='ascii-capable'
                   />
                 </View>
-                <View style={{flexDirection: 'row', marginBottom: 15 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                   <View
                     style={{
                       backgroundColor: '#b6b6b6',
@@ -167,26 +174,28 @@ const Auth = ({ navigation, AppStates }) => {
                     keyboardType='ascii-capable'
                     secureTextEntry={isVisible}
                   />
-                    <Ionicons name={isVisible ? 'eye-sharp' : 'eye-off-sharp'} size={28} color='#b6b6b6' style={{position: "absolute", 
-                    right: 10, top: 5
-                     }}
-                     onPress={() => setIsVisible(!isVisible)}
-                      />
+                  <Ionicons
+                    name={isVisible ? 'eye-sharp' : 'eye-off-sharp'}
+                    size={28}
+                    color='#b6b6b6'
+                    style={{ position: 'absolute', right: 10, top: 5 }}
+                    onPress={() => setIsVisible(!isVisible)}
+                  />
                 </View>
-              
+
                 {isError && (
                   <Text style={{ color: '#f00', width: 280 }}>
                     Vos données sont erronées, réessayez !!!
                   </Text>
                 )}
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={authentification}
-                >
-                {isLoadingAuth &&
-                <ActivityIndicator color="#fff" />
-                } 
-                  <Text style={{  color: '#fff', fontSize: 18 }}>Valider</Text>
+                <TouchableOpacity style={styles.button} onPress={authentification}>
+                  {isLoadingAuth ? (
+                    <ActivityIndicator size="large" color='#fff' style={{fontSize: 28 }}/>
+                  ) : (
+                    <Text style={{ color: '#fff', fontSize: 28, fontWeight: 'bold' }}>
+                      Valider
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>
@@ -199,13 +208,15 @@ const Auth = ({ navigation, AppStates }) => {
 
 const styles = StyleSheet.create({
   screen: {
-    marginTop: Platform.OS === 'ios' ? '10%' : '20%',
+    paddingTop: Platform.OS === 'ios' ? '10%' : '15%',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#a5a5a5',
   },
   container: {
     // flex: 0.6,
     width: '80%',
+    // backgroundColor: '#c9c9c9',
     backgroundColor: '#a5a5a5',
     padding: 20,
     borderRadius: 10,
@@ -220,12 +231,15 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
+    // height: 40,
+    height: 50,
+    marginTop: 60,
     marginBottom: 20,
+    paddingBottom: 5,
     backgroundColor: '#00caed',
+    
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 30,
     justifyContent:'center'
   }
 })

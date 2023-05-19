@@ -2847,12 +2847,24 @@ export default function AppState() {
         modalVisible, setModalVisible
         
     }
-
+    
     useEffect(() => {
-        
-        setOrderData(commandes)
-        setDeliveryPoint(deliveryPoints)
-    }, []);
+      if(!selectedOrderCity){
+          
+          setSelectedOrderCity(
+              allSlot?.['hydra:member']
+              ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.city
+              : ''
+              )
+            }
+            if(!selectedStore){
+              setSelectedStore(
+          allSlot?.['hydra:member']
+            ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.location
+            : ''
+        )
+              }
+      }, [allSlot])
 
     return <AppNavigation AppStates={AppStates} />
 

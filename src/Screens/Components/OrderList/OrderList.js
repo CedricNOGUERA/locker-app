@@ -18,14 +18,33 @@ const OrderList = ({ orderListData }) => {
     filteredData,
     setSelectedOrder,
     searchOrder,
+    allSlot,
   } = orderListData;
 
 
   const tempZone = orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/5" ? "dry" : orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/4" ? "organic-food"  : (orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/3"  || orderfilterByStoreTest?.bookingSlot?.slot?.temperatureZone["@id"] === "/api/temperature_zones/1") ? "winter" : ""
 
+  // const [deduplicate, setDeduplicate] = React.useState([])
 
-  console.log(orderfilterByStoreTest)
+  // const bookingLocker = allSlot?.['hydra:member']?.map(
+  //   (locker) => locker?.slot?.temperatureZone?.locker
+  // )
 
+  // const newObject = []
+
+  // React.useEffect(() => {
+  //   unique()
+  // }, [allSlot])
+
+  // const unique = () => {
+  //   for (var i = 0; i < bookingLocker?.length; i++) {
+  //     newObject?.push(bookingLocker[i].location)
+  //   }
+  //   setDeduplicate(newObject)
+  // }
+
+  // var uniqueTab = Array.from(new Set(deduplicate))
+  // console.log(orderfilterByStoreTest)
 
 
   return (

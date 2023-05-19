@@ -21,7 +21,6 @@ export default function GlobalHeader({ headerData, tilteHeader, icon }) {
     setModalVisible,
   } = headerData
 
-  // const [modalVisible, setModalVisible] = useState(false)
   const [modalLogoutVisible, setModalLogoutVisible] = useState(false)
   const [modalAuthVisible, setModalAuthVisible] = useState(false)
   const [company, setCompany] = useState('')
@@ -39,20 +38,16 @@ export default function GlobalHeader({ headerData, tilteHeader, icon }) {
 
   return (
     <View style={styles.headerCont}>
-      {/* <View style={styles.leftBlock}>
-        <Text style={{ marginHorizontal: 0, padding: 0 }}>
-          <IconMCI name='truck-fast-outline' size={24} color='#00caed' />
-        </Text>
-      </View> */}
       <TouchableOpacity
         style={{ fex: 1, flexDirection: 'row', marginLeft: 0, alignItems: 'center' }}
-        onPress={() => setModalVisible(true)}
       >
         <Text style={{ paddingHorizontal: 25, color: 'white' }}>
         {icon === "truck-fast-outline" ? 
         <IconMCI name={icon} size={31} color='#00caed' />
-        :
+        : icon === "upload" ?
         <IconEntypo name={icon} size={31} color="#00caed"></IconEntypo>
+        :
+        <IconFont name={icon} size={31} color="#00caed"></IconFont>
         }
         </Text>
       </TouchableOpacity>
@@ -122,7 +117,7 @@ export default function GlobalHeader({ headerData, tilteHeader, icon }) {
                 {filteredUserData?.firstName} - {company}{' '}
               </Text>
               <TouchableOpacity
-                style={[styles.butto, styles.buttonCance]}
+                // style={[styles.butto, styles.buttonCance]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={{ fontSize: 20, color: '#fff' }}>
@@ -330,7 +325,8 @@ const styles = StyleSheet.create({
   headerCont: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#a1a1a1',
+    backgroundColor: '#898989',
+    // backgroundColor: '#a1a1a1',
     paddingTop: 20,
     alignItems: 'center',
     justifyContent: 'space-around',

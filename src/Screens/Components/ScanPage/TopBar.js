@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import IconFont from "react-native-vector-icons/FontAwesome5";
 
-const TopBar = ({ topBarData }) => {
-  const { setSelectedOrder, selectedOrder } = topBarData;
+const TopBar = ({ topBarData, msg }) => {
+  const { setSelectedOrder, selectedOrder} = topBarData;
 
 
-  console.log(selectedOrder?.bookingSlot?.slot?.temperatureZone["@id"])
+  console.log(msg)
 
   return (
     <View style={styles.searchCont}>
@@ -33,7 +33,7 @@ const TopBar = ({ topBarData }) => {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginLeft: 65,
+          marginLeft: 25,
           paddingHorizontal: 5,
         }}
       >
@@ -50,7 +50,9 @@ const TopBar = ({ topBarData }) => {
               fontWeight: 'bold',
             }}
           >
-            # {selectedOrder.barcode}
+          {/* Présenter le QrCode au locker */}
+          {msg}
+            {/* # {selectedOrder.barcode} */}
           </Text>
         </View>
 

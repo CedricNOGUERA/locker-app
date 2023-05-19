@@ -15,11 +15,11 @@ const ScanPage = ({ scanPageData }) => {
 
   const topBarData = { setSelectedOrder, selectedOrder };
 
-  console.log(selectedOrder)
+
   return (
     <>
 
-    <TopBar topBarData={topBarData} />
+    <TopBar topBarData={topBarData} msg={"Présenter le QrCode au lockery"} />
     <ScrollView>
 
       <View
@@ -56,7 +56,7 @@ const ScanPage = ({ scanPageData }) => {
         <View>
           <TouchableOpacity onPress={() => {
              setSelectedOrder(null)
-            updateStatus(selectedOrder.id)}}
+            updateStatus(selectedOrder?.id)}}
             style={{ alignItems: 'center', justifyContent: 'center',
             paddingVertical: 25,
             }}

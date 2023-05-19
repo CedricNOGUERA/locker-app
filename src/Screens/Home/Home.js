@@ -2,6 +2,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import GlobalFooter from "../../Footer/GlobalFooter";
 import GlobalHeader from "../../Header/GlobalHeader";
@@ -71,7 +72,7 @@ export default function Home({ navigation, AppStates }) {
         ? allSlot?.['hydra:member'][0]?.slot?.temperatureZone?.locker?.location
         : ''
     )
-  }, [allSlot])
+  }, [])
 
 
 
@@ -101,7 +102,6 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     OrdersService.allOrders(token).then((response) => {
       // setIsLoading(false)
       setTest(response.data)
-      console.log(response.data)
     })
   }
 
@@ -135,24 +135,35 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
   /********************************
    * Change order status
    *******************************/
+  console.log(test)
   const updateStatus = (id) => {
-    const indx = orderData?.findIndex((order) => order.id === id);
-    const filteredOrder = orderData?.filter((order) => order.id === id);
-    
-    const newTab = [...orderData];
-    const newStatus = {
-      id: filteredOrder[0].id,
-      location: filteredOrder[0].location,
-      orderNum: filteredOrder[0].orderNum,
-      temp: filteredOrder[0].temp,
-      numbContainer: filteredOrder[0].numbContainer,
-      firstNameCustom: filteredOrder[0].firstNameCustom,
-      LastNameCustom: filteredOrder[0].LastNameCustom,
-      detailOrder: filteredOrder[0].detailOrder,
-      status: "operin",
-    };
-    newTab[indx] = newStatus;
-    setOrderData(newTab);
+    let data = {
+      status: 'operin',
+    }
+
+    let config = {
+      method: 'patch',
+      maxBodyLength: Infinity,
+      url: 'http://192.168.1.250:8000/api/orders/' + id,
+      // url: process.env.REACT_APP_END_POINT + 'orders/' + id,
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        Authorization: 'Bearer ' + token,
+      },
+      data: data,
+    }
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data)
+        getallOrders(token)
+        getBookingAllSlot(token)
+        setSelectedOrder(null)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   };
 
   console.log(process.env)
@@ -169,11 +180,11 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
     setModalStoreVisible,
     modalStoreVisible,
     selectedOrderCity,
+    allSlot,
   };
   const podModalData = {
     modalStoreVisible,
     setModalStoreVisible,
-    deliveryPoint,
     setSelectedStore,
     bookingLocker,
     setSelectedOrderCity,
@@ -204,7 +215,7 @@ const orderfilterByStoreTest = test["hydra:member"] && test["hydra:member"]?.fil
   return (
     <View style={styles.screen}>
       <GlobalHeader headerData={headerData} tilteHeader={'A livrer'} icon="truck-fast-outline" />
-      <StatusBar style='light' animation={true} backgroundColor={'#a1a1a1'} />
+      <StatusBar style='light' animation={true} backgroundColor={'#898989'} />
       <View style={styles.body}>
         {!selectedOrder && selectedOrder === null ? (
           <OrderList orderListData={orderListData} />
